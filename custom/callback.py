@@ -1,8 +1,7 @@
-from tensorflow.python import keras
+from tensorflow import keras
 import tensorflow as tf
 import params as par
 import sys
-from tensorflow.python.keras.optimizer_v2.learning_rate_schedule import LearningRateSchedule
 
 
 class MTFitCallback(keras.callbacks.Callback):
@@ -51,7 +50,7 @@ def transformer_dist_train_loss(y_true, y_pred):
     return _loss
 
 
-class CustomSchedule(LearningRateSchedule):
+class CustomSchedule():
     def __init__(self, d_model, warmup_steps=4000):
         super(CustomSchedule, self).__init__()
 
@@ -59,9 +58,6 @@ class CustomSchedule(LearningRateSchedule):
         self.d_model = tf.cast(self.d_model, tf.float32)
 
         self.warmup_steps = warmup_steps
-
-    def get_config(self):
-        super(CustomSchedule, self).get_config()
 
     def __call__(self, step):
         arg1 = tf.math.rsqrt(step)
